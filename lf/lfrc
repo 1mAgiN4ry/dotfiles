@@ -1,0 +1,86 @@
+set preview true
+set hidden true
+set icons true
+
+cmd mkdir %mkdir -p "$@"
+cmd touch %touch "$@"
+cmd rename %[ -e "$1" ] && printf "file exists" || mv -- "$f" "$1"
+
+cmd delete ${{
+	set -f
+	IFS='
+'
+	printf '%s\n' "$fx"
+	printf 'delete? [y/N]: '
+	read -r ans
+	if [ "$ans" = "y" ]; then
+		trash -- $fx
+	fi
+}}
+
+cmd open ${{
+	mime=$(file --mime-type -Lb -- "$f")
+	case "$mime" in
+		text/*|inode/x-empty|application/x-empty|application/javascript|application/json|application/xml)
+			$EDITOR "$f"
+			;;
+		*)
+			IFS='
+'
+			for file in $fx; do
+				${OPENER:-xdg-open} "$file" >/dev/null 2>&1 &
+			done
+			;;
+	esac
+}}
+
+cmd extract ${{
+	set -f
+	case "$f" in
+		*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f";;
+		*.tar.gz|*.tgz) tar xzvf "$f";;
+		*.tar.xz|*.txz) tar xJvf "$f";;
+		*.zip) unzip "$f";;
+		*.rar) unrar "$f";;
+		*.7z) 7z x "$f";;
+	esac
+}}
+
+cmd tar ${{
+	set -f
+	IFS='
+'
+	mkdir -- "$1" || exit 1
+	cp -r -- $fx "$1"
+	tar czf "$1.tar.gz" -- "$1"
+	rm -rf -- "$1"
+}}
+
+cmd zip ${{
+	set -f
+	IFS='
+'
+	mkdir -- "$1" || exit 1
+	cp -r -- $fx "$1"
+	zip -r "$1.zip" "$1"
+	rm -rf -- "$1"
+}}
+
+map gh cd ~
+map . set hidden!
+map DD delete
+map <delete> delete
+map p paste
+map x cut
+map E $$f
+map X !$f
+map y copy
+map A push %mkdir<space>
+map a push %touch<space>
+map r push :rename<space>
+map e :extract
+map t :tar
+map Z :zip
+map <enter> shell
+
+set previewer ~/.config/lf/preview
