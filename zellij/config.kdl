@@ -1,0 +1,21 @@
+theme "gruvbox-dark"
+
+pane_frames false
+default_shell "fish"
+
+copy_command "xclip -selection clipboard"
+
+default_layout "compact"
+
+show_startup_tips false
+
+ui {
+	pane_frames {
+		rounded_corners false
+	}
+}
+
+// So SSH works on servers that don't have st's terminfo
+env {
+	TERM "xterm-256color"
+}
