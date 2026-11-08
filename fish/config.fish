@@ -7,6 +7,7 @@ set -gx BROWSER librewolf
 
 # XDG and misc
 set -gx XCURSOR_PATH $HOME/.local/share/icons
+set -gx GNUPGHOME $HOME/.local/share/gnupg
 set -gx ODIN_ROOT "$HOME/.local/bin/Odin/"
 
 fish_add_path -g $HOME/.local/bin/
