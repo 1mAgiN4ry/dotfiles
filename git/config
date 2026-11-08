@@ -1,0 +1,9 @@
+[user]
+	name = 1mAgiN4ry
+	email = 125927980+1mAgiN4ry@users.noreply.github.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[core]
+	editor = nvim
