@@ -13,9 +13,7 @@ set -gx ODIN_ROOT "$HOME/.local/bin/Odin/"
 fish_add_path -g $HOME/.local/bin/
 
 if status is-interactive
-    # Disable greeting
-    set fish_greeting
+	set fish_greeting
 
-    # Zoxide (replaces cd)
-    zoxide init fish --cmd cd | source
+	zoxide init fish --cmd cd | source
 end
