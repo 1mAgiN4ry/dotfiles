@@ -1,5 +1,4 @@
 set preview true
-set hidden true
 set icons true
 
 cmd mkdir %mkdir -p "$@"
